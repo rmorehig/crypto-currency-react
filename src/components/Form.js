@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const Formulario = () => {
+const getCrypto = async () => {
+  const url =
+    "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD";
+  const result = await fetch(url);
+  return result;
+};
+
+const Form = () => {
+  const [crypto, setCrypto] = useState([]);
+
+  useEffect(() => {
+    console.log(getCrypto());
+  }, []);
+
   return (
     <form>
       <div className="row">
@@ -22,4 +35,4 @@ const Formulario = () => {
   );
 };
 
-export default Formulario;
+export default Form;
