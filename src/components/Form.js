@@ -5,6 +5,9 @@ const url =
 
 const Form = () => {
   const [crypto, setCrypto] = useState([]);
+  const [currencyQuote, setCurrencyQuote] = useState("");
+  const [cryptoQuote, setCryptoQuote] = useState("");
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch(url)
@@ -12,11 +15,20 @@ const Form = () => {
       .then((res) => setCrypto(res.Data));
   }, []);
 
+  const completeFields = (e) => {
+    e.preventDefault();
+    currencyQuote === "" || cryptoQuote === ""
+      ? setError(true)
+      : setError(false);
+  };
   return (
-    <form>
+    <form onSubmit={completeFields}>
       <div className="row">
         <label>Choose currency</label>
-        <select className="u-full-width">
+        <select
+          className="u-full-width"
+          onChange={(e) => setCurrencyQuote(e.target.value)}
+        >
           <option value="">- Currency -</option>
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
@@ -25,12 +37,20 @@ const Form = () => {
       </div>
       <div className="row">
         <label>Choose Cryptocurrency</label>
-        <select className="u-full-width">
+        <select
+          className="u-full-width"
+          onChange={(e) => setCryptoQuote(e.target.value)}
+        >
           {crypto.map((c) => (
             <Cryptocurrency key={c.CoinInfo.Id} {...c} />
           ))}
         </select>
       </div>
+      <input
+        type="submit"
+        className="button-primary u-full-width"
+        value="Calcular"
+      />
     </form>
   );
 };
