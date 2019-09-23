@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
-
-const getCrypto = async () => {
-  const url =
-    "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD";
-  const result = await fetch(url);
-  return result;
-};
+import Cryptocurrency from "./Cryptocurrency";
+const url =
+  "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD";
 
 const Form = () => {
   const [crypto, setCrypto] = useState([]);
 
   useEffect(() => {
-    console.log(getCrypto());
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setCrypto(res.Data));
   }, []);
 
   return (
@@ -19,7 +17,7 @@ const Form = () => {
       <div className="row">
         <label>Choose currency</label>
         <select className="u-full-width">
-          <option value="">Currency</option>
+          <option value="">- Currency -</option>
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
           <option value="GBP">GBP</option>
@@ -28,7 +26,9 @@ const Form = () => {
       <div className="row">
         <label>Choose Cryptocurrency</label>
         <select className="u-full-width">
-          <option value="">Cryptocurrency</option>
+          {crypto.map((c) => (
+            <Cryptocurrency key={c.CoinInfo.Id} {...c} />
+          ))}
         </select>
       </div>
     </form>
