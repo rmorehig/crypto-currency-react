@@ -5,7 +5,7 @@ import Error from "./Error";
 const url =
   "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD";
 
-const Form = () => {
+const Form = ({ setCryptocurrency, setCurrency }) => {
   const [crypto, setCrypto] = useState([]);
   const [currencyQuote, setCurrencyQuote] = useState("");
   const [cryptoQuote, setCryptoQuote] = useState("");
@@ -22,6 +22,8 @@ const Form = () => {
     currencyQuote === "" || cryptoQuote === ""
       ? setError(true)
       : setError(false);
+    setCryptocurrency(cryptoQuote);
+    setCurrency(currencyQuote);
   };
   return (
     <form onSubmit={checkFields}>
