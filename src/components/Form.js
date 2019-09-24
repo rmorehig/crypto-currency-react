@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cryptocurrency from "./Cryptocurrency";
+import Error from "./Error";
+
 const url =
   "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD";
 
@@ -15,14 +17,15 @@ const Form = () => {
       .then((res) => setCrypto(res.Data));
   }, []);
 
-  const completeFields = (e) => {
+  const checkFields = (e) => {
     e.preventDefault();
     currencyQuote === "" || cryptoQuote === ""
       ? setError(true)
       : setError(false);
   };
   return (
-    <form onSubmit={completeFields}>
+    <form onSubmit={checkFields}>
+      {error && <Error message="Both fields are required" />}
       <div className="row">
         <label>Choose currency</label>
         <select
@@ -41,6 +44,7 @@ const Form = () => {
           className="u-full-width"
           onChange={(e) => setCryptoQuote(e.target.value)}
         >
+          <option value="">- Cryptocurrency -</option>
           {crypto.map((c) => (
             <Cryptocurrency key={c.CoinInfo.Id} {...c} />
           ))}
