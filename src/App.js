@@ -16,7 +16,7 @@ function App() {
       console.log(data);
     };
     quoteCryptocurrency();
-  }, []);
+  }, [cryptoCurrency, currency]);
 
   return (
     <div className="container">
@@ -27,8 +27,8 @@ function App() {
         <div className="one-half column">
           <h1>Instant Cryptocurrency quotes</h1>
           <Form
-            setCryptoCurrency={() => setCryptoCurrency()}
-            setCurrency={() => setCurrency()}
+            setCryptoCurrency={setCryptoCurrency}
+            setCurrency={setCurrency}
           />
         </div>
       </div>

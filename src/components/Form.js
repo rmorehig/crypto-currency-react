@@ -5,7 +5,7 @@ import Error from "./Error";
 const url =
   "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD";
 
-const Form = ({ setCryptocurrency, setCurrency }) => {
+const Form = ({ setCryptoCurrency, setCurrency }) => {
   const [crypto, setCrypto] = useState([]);
   const [currencyQuote, setCurrencyQuote] = useState("");
   const [cryptoQuote, setCryptoQuote] = useState("");
@@ -13,16 +13,16 @@ const Form = ({ setCryptocurrency, setCurrency }) => {
 
   useEffect(() => {
     fetch(url)
-      .then((res) => res.json())
-      .then((res) => setCrypto(res.Data));
+      .then(res => res.json())
+      .then(res => setCrypto(res.Data));
   }, []);
 
-  const checkFields = (e) => {
+  const checkFields = e => {
     e.preventDefault();
     currencyQuote === "" || cryptoQuote === ""
       ? setError(true)
       : setError(false);
-    setCryptocurrency(cryptoQuote);
+    setCryptoCurrency(cryptoQuote);
     setCurrency(currencyQuote);
   };
   return (
@@ -32,7 +32,7 @@ const Form = ({ setCryptocurrency, setCurrency }) => {
         <label>Choose currency</label>
         <select
           className="u-full-width"
-          onChange={(e) => setCurrencyQuote(e.target.value)}
+          onChange={e => setCurrencyQuote(e.target.value)}
         >
           <option value="">- Currency -</option>
           <option value="USD">USD</option>
@@ -44,10 +44,10 @@ const Form = ({ setCryptocurrency, setCurrency }) => {
         <label>Choose Cryptocurrency</label>
         <select
           className="u-full-width"
-          onChange={(e) => setCryptoQuote(e.target.value)}
+          onChange={e => setCryptoQuote(e.target.value)}
         >
           <option value="">- Cryptocurrency -</option>
-          {crypto.map((c) => (
+          {crypto.map(c => (
             <Cryptocurrency key={c.CoinInfo.Id} {...c} />
           ))}
         </select>
