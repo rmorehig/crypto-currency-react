@@ -15,10 +15,10 @@ function App() {
     if (currency === "") return;
     setIsLoading(true);
     const quoteCryptocurrency = async () => {
-      const url = `https://min-api.cryptocompare.com/data/price?fsym=${cryptoCurrency}&tsyms=${currency}`;
+      const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptoCurrency}&tsyms=${currency}`;
       const result = await fetch(url);
       const data = await result.json();
-      console.log(data[currency]);
+      console.log(data.DISPLAY[cryptoCurrency][currency]);
     };
     quoteCryptocurrency();
   }, [cryptoCurrency, currency]);
