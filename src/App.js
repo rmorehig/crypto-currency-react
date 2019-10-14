@@ -4,11 +4,12 @@ import "./assets/css/skeleton.css";
 import img from "./assets/images/cryptomonedas.png";
 import Form from "./components/Form";
 import Spinner from "./components/Spinner";
+import Result from "./components/Result";
 
 function App() {
   const [cryptoCurrency, setCryptoCurrency] = useState("");
   const [currency, setCurrency] = useState("");
-  const [data, setData] = useState("");
+  const [result, setResult] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -18,12 +19,15 @@ function App() {
       const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptoCurrency}&tsyms=${currency}`;
       const result = await fetch(url);
       const data = await result.json();
-      console.log(data.DISPLAY[cryptoCurrency][currency]);
+      setResult(data.DISPLAY[cryptoCurrency][currency]);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     };
     quoteCryptocurrency();
   }, [cryptoCurrency, currency]);
 
-  const component = isLoading && <Spinner />;
+  const component = isLoading ? <Spinner /> : <Result result={result} />;
   return (
     <div className="container">
       <div className="row">
